@@ -1,8 +1,6 @@
 # JsonApiTestHelpers
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_api_test_helpers`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Collection of helpers methods to easy testing of JSON API responses
 
 ## Installation
 
@@ -22,7 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Methods:
+
+| Methods       | Params  | Description                                                             |
+|---------------|---------|-------------------------------------------------------------------------|
+| json_response |         | Returns parsed `response.body` as Hash with indifferent access or Array |
+| json_api_record | `record`, `attributes`, `relationships: nil`, `additional: nil`| Returns Hash in JSON API format with serialized object |
+| json_api_collection | `collection`, `attributes = nil`, `relationships: nil` | Returns Hash in JSON API format with serialized array |                                                                        |
 
 ## Development
 
