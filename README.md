@@ -1,6 +1,6 @@
 # JsonApiTestHelpers
 
-Collection of helper methods to easy testing of JSON API responses
+Collection of helper methods to easy testing of JSON API https://jsonapi.org/ responses
 
 ## Installation
 
