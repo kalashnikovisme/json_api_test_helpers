@@ -2,8 +2,12 @@ require 'json_api_test_helpers/version'
 
 module JsonApiTestHelpers
   def json_response
-    parsed_json = JSON.parse response.body
-    parsed_json.with_indifferent_access unless parsed_json.is_a? Array
+    if response.body.present?
+      parsed_json = JSON.parse response.body
+      parsed_json.with_indifferent_access unless parsed_json.is_a? Array
+    else
+      raise 'Response body is empty'
+    end
   end
 
   def json_api_record(record, attributes, relationships: nil, additional: nil)
