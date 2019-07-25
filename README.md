@@ -35,7 +35,7 @@ Methods:
 ## Examples
 
 ```ruby
-expect(json_response).to include_json(json_api_record(User.first))
+expect(json_response).to include_json(json_api_record(User.first, [ :email, :another_attribute ]))
 
 expect(json_response).to include_json(json_api_collection(User.all))
 
