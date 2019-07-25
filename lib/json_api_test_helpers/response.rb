@@ -70,7 +70,7 @@ module JsonApiTestHelpers
 
     def json_api_record_attributes(record, attributes)
       attributes.reduce({}) do |hash, attr|
-        hash.merge! attr[0].to_s.tr('_', '-') => fix_value_for_json(record.send(attr[0]))
+        hash.merge! attr.to_s.tr('_', '-') => fix_value_for_json(record.send(attr))
       end
     end
 
