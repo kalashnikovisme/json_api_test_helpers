@@ -66,8 +66,6 @@ module JsonApiTestHelpers
       end
     end
 
-    private
-
     def json_api_record_attributes(record, attributes)
       attributes.reduce({}) do |hash, attr|
         hash.merge! attr.to_s.tr('_', '-') => fix_value_for_json(record.send(attr))
@@ -76,13 +74,15 @@ module JsonApiTestHelpers
 
     def json_api_relationships(record, relationships)
       relationships.reduce({}) do |hash, relationship|
-        object = record.send relationship
+        name = relation_has_another_class_name?(relationship) ? relationship[0] : relationship
+        class_name = relation_has_another_class_name?(relationship) ? relationship[1] : relationship
+        object = record.send name
         data = if object.is_a?(ActiveRecord::Associations::CollectionProxy)
-                 object.reduce([]) { |result, item| result << data_relationship_object(item, relationship) }
+                 object.reduce([]) { |result, item| result << data_relationship_object(item, class_name) }
                else
-                 object.present? ? data_relationship_object(object, relationship) : {}
+                 object.present? ? data_relationship_object(object, class_name) : {}
                end
-        hash.merge! json_api_model_name(relationship) => { 'data' => data }
+        hash.merge! json_api_model_name(name) => { 'data' => data }
       end
     end
 
@@ -95,6 +95,10 @@ module JsonApiTestHelpers
         'id' => object.id.to_s,
         'type' => json_api_model_name(relationship).pluralize
       }
+    end
+
+    def relation_has_another_class_name?(relationship)
+      relationship.is_a? Array
     end
   end
 end
