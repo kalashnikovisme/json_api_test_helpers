@@ -12,7 +12,7 @@ module JsonApiTestHelpers
     def json_api_record(record, attributes, relationships: nil, additional: nil)
       json = {
         'data' => {
-          'id' => record.id.to_s,
+          'id' => record.uuid,
           'attributes' => json_api_record_attributes(record, attributes)
         }
       }
@@ -24,7 +24,7 @@ module JsonApiTestHelpers
       {
         'data' => collection.map do |record|
           hash = {
-            'id' => record.id.to_s
+            'id' => record.uuid
           }
           hash['attributes'] = json_api_record_attributes(record, attributes) if attributes
           hash['relationships'] = json_api_relationships(record, relationships) if relationships
@@ -92,7 +92,7 @@ module JsonApiTestHelpers
 
     def data_relationship_object(object, relationship)
       {
-        'id' => object.id.to_s,
+        'id' => object.uuid,
         'type' => json_api_model_name(relationship).pluralize
       }
     end
