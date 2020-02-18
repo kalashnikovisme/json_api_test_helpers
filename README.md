@@ -27,6 +27,7 @@ Methods:
 | json_response |         | Returns parsed `response.body` as Hash with indifferent access or Array |
 | json_api_record | `record`, `attributes`, `relationships: nil`, `additional: nil`| Returns Hash in JSON API format with serialized object |
 | json_api_collection | `collection`, `attributes = nil`, `relationships: nil` | Returns Hash in JSON API format with serialized array |
+| json_api_relationships | `record`, `relationships` | Returns Hash of the record's relationships. When `relationships` argument is Array, all releations have name same as model class names. When it's Hash { relationship_name => class_name } | 
 | fix_value_for_json | `value` | Fix values which are usually used in Rails apps. `DateTime`, `ActiveSupport::TimeWithZone` to `iso8601`; `CarrierWave::Uploader::Serialization` to `serializable_hash`; everything else to Hash with replaced underscores `_` to minus `-` in attribute names |
 | fix_comparing_types | `value` | Fix type value to easy compare. `DateTime`, `ActiveSupport::TimeWithZone` to `datetime` with UTC; `ActiveRecord::Point` to string `"#{value.x}, #{value.y}"`. |
 | attributes_for_nested | `attributes`, `**associations` | Merge `attributes` with associations with JSON API format |
@@ -38,6 +39,8 @@ Methods:
 expect(json_response).to include_json(json_api_record(User.first, [ :email, :another_attribute ]))
 
 expect(json_response).to include_json(json_api_collection(User.all))
+
+expect(json_response).to include_json(json_api_relationships(user, posts: :user_posts))
 
 post 'some_post', params: json_api_params({ attribute1: :value1, attribute2: :value2 })
 ```
