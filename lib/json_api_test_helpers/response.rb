@@ -1,8 +1,8 @@
 module JsonApiTestHelpers
   module Response
     def json_response
-      if response[:body].present?
-        parsed_json = JSON.parse response[:body]
+      if response.body.present?
+        parsed_json = JSON.parse response.body
         parsed_json.with_indifferent_access unless parsed_json.is_a? Array
       else
         raise 'Response body is empty'
